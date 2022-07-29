@@ -1,21 +1,25 @@
 import { z } from 'zod';
+import { VehicleZodSchema } from './IVehicle';
 
-// import { IVehicle } from './IVehicle';
-
-// export interface ICar extends IVehicle{
-
-// }
-
-const CarZodSchema = z.extend(
-  {
-    doorsQty: z.number().gte(2).lte(4),
-    seatsQty: z.number().gte(2).lte(7),
-  },
-);
+const CarZodSchema = VehicleZodSchema.extend({
+  doorsQty: z.number().gte(2).lte(4),
+  seatsQty: z.number().gte(2).lte(7),
+});
 
 type ICar = z.infer<typeof CarZodSchema>;
 export { ICar, CarZodSchema };
 
-const DogWithBreed = Dog.extend({
-  breed: z.string(),
-});
+// all properties are required by default
+// const Dog = z.object({
+//   name: z.string(),
+//   age: z.number(),
+// });
+
+// // extract the inferred type like this
+// type Dog = z.infer<typeof Dog>;
+
+// // equivalent to:
+// type Dog = {
+//   name: string;
+//   age: number;
+// };
