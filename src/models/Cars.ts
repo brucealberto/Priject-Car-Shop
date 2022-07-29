@@ -4,7 +4,7 @@ import MongoModel from './MongoModel';
 
 const carsMongooseSchema = new Schema<ICar>({
   doorsQty: Number,
-  seatsQty: Boolean,
+  seatsQty: Number,
 });
 
 class Car extends MongoModel<ICar> {
