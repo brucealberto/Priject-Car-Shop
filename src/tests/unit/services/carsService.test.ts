@@ -19,12 +19,12 @@ describe('Cars Service', () => {
     sinon.restore();
   });
 
-  it('Created', async () => {
+  it('Created Car', async () => {
     const car = await carsService.create(carsMock);
     expect(car).to.be.equal(carsMockWithId);
   });
 
-  it('Not Created', async () => {
+  it('Car Not Created', async () => {
     try {
       await carsService.create({} as any);
     } catch (error) {

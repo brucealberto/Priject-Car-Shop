@@ -15,7 +15,7 @@ describe('Cars Model', () => {
     sinon.restore();
   });
 
-  it('create with sucess', async () => {
+  it('create car with sucess', async () => {
     const car = await carsModel.create(carsMock);
     expect(car).to.be.deep.equal(carsMockWithId);
   });
