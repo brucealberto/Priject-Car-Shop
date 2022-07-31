@@ -14,14 +14,17 @@ abstract class MongoModel<T> implements IModel<T> {
   public async read(): Promise<T[]> {
     return this._model.find();
   }
+  
   public async readOne(_id: string): Promise<T | null> {
     if (!isValidObjectId) throw new Error('invalid');
     return this._model.findById({ _id });
   }
+
   public async update(_id: string, obj: T): Promise<T | null> {
     if (!isValidObjectId) throw new Error('Mongo Id');
     return this._model.findByIdAndUpdate({ _id }, { ...obj }, { new: true });
   }
+  
   public async delete(_id: string): Promise<T | null> {
     if (!isValidObjectId) throw new Error('invalid Mongo Id');
     return this._model.findByIdAndDelete({ _id });
