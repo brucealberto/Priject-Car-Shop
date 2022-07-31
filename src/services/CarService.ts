@@ -1,3 +1,4 @@
+import { ErrorTypes } from '../errors/catalogs';
 import { CarZodSchema, ICar } from '../interfaces/ICar';
 import { IModel } from '../interfaces/IModel';
 import { IService } from '../interfaces/IService';
@@ -12,5 +13,11 @@ export default class CarService implements IService<ICar> {
     const parsed = CarZodSchema.safeParse(obj);
     if (!parsed.success) throw parsed.error;
     return this._car.create(obj);
+  }
+
+  public async readOne(_id: string): Promise<ICar> {
+    const car = await this._car.readOne(_id);
+    if (!car) throw new Error(ErrorTypes.ObjectNotFound);
+    return car;
   }
 }
