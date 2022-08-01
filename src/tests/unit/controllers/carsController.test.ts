@@ -15,7 +15,10 @@ describe('Cars Controller', () => {
   const req = {} as Request;
   const res = {} as Response;
   before(async () => {
-    sinon.stub(Model, 'create').resolves(carsMock);
+    sinon.stub(carService, 'create').resolves(carsMockWithId);
+    sinon.stub(carService, 'update').resolves(carsMockWithId);
+    sinon.stub(carService, 'readOne').resolves(carsMockWithId);
+
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
   });
@@ -28,6 +31,21 @@ describe('Cars Controller', () => {
     req.body = carsMock;
     await carController.create(req, res);
     expect((res.status as sinon.SinonStub).calledWith(201)).to.be.true;
-    expect((res.json as sinon.SinonStub).calledWith(carsMock)).to.be.true;
+    expect((res.json as sinon.SinonStub).calledWith(carsMockWithId)).to.be.true;
+  });
+
+  it('Found Car', async () => {
+    req.params = { id: carsMockWithId._id };
+    await carController.readOne(req, res);
+    expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    expect((res.json as sinon.SinonStub).calledWith(carsMockWithId)).to.be.true;
+  });
+
+  it('Updated Car', async () => {
+    req.params = { id: carsMockWithId._id };
+    req.body = carsMock;
+    await carController.update(req, res);
+    expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+    expect((res.json as sinon.SinonStub).calledWith(carsMockWithId)).to.be.true;
   });
 });

@@ -15,6 +15,7 @@ const errorHandler: ErrorRequestHandler = (
   const errorTypesMessage = err.message as keyof typeof ErrorTypes;
 
   const knowError = errorCatalog[errorTypesMessage];
+  
   if (knowError) {
     const { status, message } = knowError;
     return res.status(status).json({ error: message });
